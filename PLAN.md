@@ -99,7 +99,7 @@ src/
 - [ ] Loading skeletons for weather + route fetch states
 - [ ] Error boundaries + user-facing error messages
 - [ ] Route re-fetch on significant location change
-- [ ] Hourly forecast strip — best window to run today
+- [ ] Hourly forecast strip — visualizes the scores behind the run window recommendation
 - [ ] PWA manifest + service worker for offline map tiles (stretch)
 
 ---
