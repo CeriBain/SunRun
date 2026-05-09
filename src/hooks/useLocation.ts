@@ -18,3 +18,7 @@ async function fetchIPCoords(): Promise<Coords> {
   const data = await res.json()
   return { lat: data.latitude, lng: data.longitude }
 }
+
+export function useLocation(): LocationState {
+  const [coords, setCoords] = useState<Coords | null>(null)
+}
