@@ -20,5 +20,36 @@ async function fetchIPCoords(): Promise<Coords> {
 }
 
 export function useLocation(): LocationState {
-  const [coords, setCoords] = useState<Coords | null>(null)
+  const [coords, setCoords] = useState<Coords | null>(null) // <Coords tells us what type the state variable can hold
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      // navigator = browser object that's already on the browser / geolocation is a property
+      fetchIPCoords()
+        .then(setCoords)
+        .catch(() => setError('Could not determine your location'))
+        .finally(() => setLoading(false))
+      return
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setCoords({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        })
+        setLoading(false)
+      },
+      () => {
+        fetchIPCoords()
+          .then(setCoords)
+          .catch(() => setError('Could not determine your location'))
+          .finally(() => setLoading(false))
+      }
+    )
+  }, [])
+
+  return { coords, loading, error }
 }
