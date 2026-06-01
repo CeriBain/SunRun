@@ -7,3 +7,6 @@ export function Map() {
   if (error) return <div className="p-4 text-red-500">{error}"</div>
   if (!coords) return null
 }
+return (
+    <MapContainer center={[GeolocationCoordinates.lat, GeolocationCoordinates.lng]}
+)
