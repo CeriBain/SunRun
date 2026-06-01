@@ -4,14 +4,12 @@ A running route app that suggests routes based on local weather conditions.
 
 ## Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend framework | React + TypeScript + Vite |
-| Styling | Tailwind CSS |
-| Maps | Leaflet (react-leaflet) |
-| Weather data | Open-Meteo (free, no API key) |
-| Routing / directions | OpenRouteService API |
-| Auth + persistence | Supabase (auth, saved routes) |
+Frontend framework - React + TypeScript + Vite
+Styling - Tailwind CSS
+Maps - Leaflet (react-leaflet)
+Weather data - Open-Meteo (free, no API key)
+Routing/directions - OpenRouteService API
+Auth + persistence - Supabase (auth, saved routes)
 
 ---
 
@@ -55,6 +53,7 @@ src/
 ## Phases
 
 ### Phase 1 — Foundation
+
 - [ ] Vite + React + TypeScript scaffold (`npm create vite@latest`)
 - [ ] Tailwind CSS setup
 - [ ] ESLint + Prettier config
@@ -62,13 +61,17 @@ src/
 - [ ] `useLocation` hook — geolocation with fallback to IP-based coords
 
 ### Phase 2 — Weather Integration
+
 - [ ] Open-Meteo API wrapper in `lib/weather.ts`
 - [ ] `useWeather` hook — fetch current conditions + hourly forecast
 - [ ] Weather display component — temperature, wind speed, precipitation, UV index
 - [ ] Weather scoring function — maps conditions to a run-friendliness score (0–100)
 - [ ] Condition labels: "Great day to run", "Dress warm", "Skip it — rain incoming"
+- [ ] **Run window** — `findBestRunWindow(hourly[])` in `lib/weather.ts` scores each hour and returns the top 2-hour slot in the next 12 hours
+- [ ] `RunWindowBanner` component — shows the best window prominently (e.g. "Best time to run: 6–8 PM · 68°F, no rain") or a fallback message if no good window exists today
 
 ### Phase 3 — Route Generation
+
 - [ ] OpenRouteService account + API key (stored in `.env`)
 - [ ] `useRoutes` hook — generate 3–5 loop route options from current location
 - [ ] Route parameters driven by weather score: shorter/flatter routes in bad weather
@@ -76,6 +79,7 @@ src/
 - [ ] Map overlay — draw selected route polyline on Leaflet map
 
 ### Phase 4 — Supabase Auth
+
 - [ ] Supabase project setup, `.env` vars
 - [ ] `lib/supabase.ts` client
 - [ ] Auth pages — email/password login + signup (Supabase Auth)
@@ -83,17 +87,19 @@ src/
 - [ ] Protected routes — `SavedRoutes` requires login
 
 ### Phase 5 — Saved Routes
+
 - [ ] Supabase `saved_routes` table: `id, user_id, name, geojson, distance_km, elevation_m, created_at`
 - [ ] Row-level security (RLS) policy — users see only their own routes
 - [ ] Save / unsave route action from `RoutePanel`
 - [ ] `SavedRoutes` page — list saved routes, click to load on map
 
 ### Phase 6 — Polish
+
 - [ ] Responsive layout — mobile-first, map full-screen with slide-up panel
 - [ ] Loading skeletons for weather + route fetch states
 - [ ] Error boundaries + user-facing error messages
 - [ ] Route re-fetch on significant location change
-- [ ] Hourly forecast strip — best window to run today
+- [ ] Hourly forecast strip — visualizes the scores behind the run window recommendation
 - [ ] PWA manifest + service worker for offline map tiles (stretch)
 
 ---
