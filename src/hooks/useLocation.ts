@@ -12,7 +12,7 @@ interface LocationState {
 }
 
 async function fetchIPCoords(): Promise<Coords> {
-  const res = await fetch('https://ipapi.co/json/')
+  const res = await fetch('https://freeipapi.com/api/json')
   if (!res.ok) throw new Error('IP geolocation failed')
 
   const data = await res.json()
