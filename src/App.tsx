@@ -1,9 +1,10 @@
 import { Routes, Route } from 'react-router-dom'
+import { Map } from './components/Map'
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<div className="p-4 text-2xl font-bold">SunRun</div>} />
+      <Route path="/" element={<Map />} />
     </Routes>
   )
 }
