@@ -60,3 +60,20 @@ export async function fetchWeather(
     },
   }
 }
+export function scoreWeather(current: CurrentWeather): number {
+  let score = 100
+
+  if (current.temperature < 0 || current.temperature > 35) score -= 40
+  else if (current.temperature < 5 || current.temperature > 28) score -= 20
+
+  if (current.windSpeed > 40) score -= 30
+  else if (current.windSpeed > 20) score -= 15
+
+  if (current.precipitation > 2) score -= 30
+  else if (current.precipitation > 0) score -= 10
+
+  if (current.uvIndex > 8) score -= 20
+  else if (current.uvIndex > 6) score -= 10
+
+  return Math.max(0, score)
+}
