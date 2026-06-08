@@ -75,5 +75,14 @@ export function scoreWeather(current: CurrentWeather): number {
   if (current.uvIndex > 8) score -= 20
   else if (current.uvIndex > 6) score -= 10
 
-  return Math.max(0, score)
+  return Math.max(0, score) // error handling to stop it going to 0
+}
+export function getConditionLabel(score: number): string {
+  if (score >= 80) return 'Great day to run, get out there!'
+  if (score >= 60) return 'Good day to run but pack some extra clothes'
+  if (score >= 40)
+    return 'Varied conditions today, this route should mostly okay'
+  if (score >= 20)
+    return "Tough conditions today, but we've found you the best route available"
+  return "It's not good out there, I'd skip it today"
 }
