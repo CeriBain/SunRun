@@ -1,5 +1,4 @@
 import { useWeather } from '../hooks/useWeather'
-import { useLocation } from '../hooks/useLocation'
 
 //uses co-ordinates as props (arguments like a function) and uses them to call useWeather hook
 
