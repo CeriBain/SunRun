@@ -101,7 +101,7 @@ export function findBestRunWindow(hourly: HourlyWeather): RunWindow | null {
   let bestScore = -1
   let bestIndex = -1
 
-  for (let i = 0; i < hourly.time.length - 1; i++) {
+  for (let i = 0; i < hourly.time.length - 2; i++) {
     const slotTime = new Date(hourly.time[i])
     if (slotTime < now || slotTime > cutoff) continue
 
@@ -132,7 +132,7 @@ export function findBestRunWindow(hourly: HourlyWeather): RunWindow | null {
 
   return {
     startTime: fmt(hourly.time[bestIndex]),
-    endTime: fmt(hourly.time[bestIndex + 1]),
+    endTime: fmt(hourly.time[bestIndex + 2]),
     score: Math.round(bestScore),
   }
 }
