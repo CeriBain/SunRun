@@ -1,7 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
 import { Map } from './components/Map'
 import { WeatherDisplay } from './components/Weather'
+import { RunWindowBanner } from './components/RunWindowBanner'
 import { useLocation } from './hooks/useLocation'
+import { useWeather } from './hooks/useWeather'
 
 function App() {
   const { coords } = useLocation()
