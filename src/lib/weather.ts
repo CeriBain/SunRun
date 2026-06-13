@@ -4,6 +4,12 @@ export interface CurrentWeather {
   precipitation: number
   uvIndex: number
 }
+export interface RunWindow {
+  startTime: string
+  endTime: string
+  score: number
+}
+
 // types to describe what the data will look like when it comes back from the weather API
 // comtracts that tell typesrcipt whenever ou see a weather data object it must have this structure
 
@@ -85,4 +91,48 @@ export function getConditionLabel(score: number): string {
   if (score >= 20)
     return "Tough conditions today, but we've found you the best route available"
   return "It's not good out there, I'd skip it today"
+}
+
+export function findBestRunWindow(hourly: HourlyWeather): RunWindow | null {
+  //takes argument called hourly and it must look like the imported Interface
+  const now = new Date()
+  const cutoff = new Date(now.getTime() + 12 * 60 * 60 * 1000)
+
+  let bestScore = -1
+  let bestIndex = -1
+
+  for (let i = 0; i < hourly.time.length - 1; i++) {
+    const slotTime = new Date(hourly.time[i])
+    if (slotTime < now || slotTime > cutoff) continue
+
+    const score1 = scoreWeather({
+      temperature: hourly.temperature[i],
+      windSpeed: hourly.windSpeed[i],
+      precipitation: hourly.precipitationProbability[i] / 10,
+      uvIndex: hourly.uvIndex[i],
+    })
+    const score2 = scoreWeather({
+      temperature: hourly.temperature[i + 1],
+      windSpeed: hourly.windSpeed[i + 1],
+      precipitation: hourly.precipitationProbability[i + 1] / 10,
+      uvIndex: hourly.uvIndex[i + 1],
+    })
+
+    const avgScore = (score1 + score2) / 2
+    if (avgScore > bestScore) {
+      bestScore = avgScore
+      bestIndex = i
+    }
+  }
+
+  if (bestIndex === -1) return null
+
+  const fmt = (t: string) =>
+    new Date(t).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+
+  return {
+    startTime: fmt(hourly.time[bestIndex]),
+    endTime: fmt(hourly.time[bestIndex + 1]),
+    score: Math.round(bestScore),
+  }
 }
