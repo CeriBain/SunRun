@@ -7,6 +7,7 @@ import { useWeather } from './hooks/useWeather'
 
 function App() {
   const { coords } = useLocation()
+  const { data } = useWeather(coords?.lat ?? null, coords?.lng ?? null)
 
   return (
     <div className="relative">
@@ -14,7 +15,8 @@ function App() {
         <Route path="/" element={<Map />} />
       </Routes>
       {coords && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[1000]">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[1000] flex flex-col gap-3 w-96">
+          {data && <RunWindowBanner hourly={data.hourly} />}
           <WeatherDisplay lat={coords.lat} lng={coords.lng} />
         </div>
       )}
