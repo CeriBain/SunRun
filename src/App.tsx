@@ -4,6 +4,9 @@ import { WeatherDisplay } from './components/Weather'
 import { RunWindowBanner } from './components/RunWindowBanner'
 import { useLocation } from './hooks/useLocation'
 import { useWeather } from './hooks/useWeather'
+import { useRoutes } from './hooks/useRoutes'
+import { RoutePanel } from './components/RoutePanel'
+import type { Route } from './lib/routing'
 
 function App() {
   const { coords } = useLocation()
