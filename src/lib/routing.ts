@@ -6,7 +6,7 @@ export interface Route {
 }
 
 const ORS_URL =
-  'https://api.openrouteservice.org/v2/directions/foot-walking/json'
+  'https://api.openrouteservice.org/v2/directions/foot-walking/geojson'
 
 export async function fetchRoutes(
   lat: number,
@@ -29,7 +29,6 @@ export async function fetchRoutes(
           coordinates: [[lng, lat]],
           options: { round_trip: { length, seed: i + 1 } },
           elevation: true,
-          units: 'km',
         }),
       }).then((res) => {
         if (!res.ok) throw new Error('Route fetch failed')
@@ -39,14 +38,15 @@ export async function fetchRoutes(
   )
 
   return routes.map((data) => {
-    const summary = data.routes[0].summary
-    const coords: [number, number][] = data.routes[0].geometry.coordinates.map(
+    const feature = data.features[0]
+    const summary = feature.properties.summary
+    const coords: [number, number][] = feature.geometry.coordinates.map(
       ([lon, lat]: [number, number]) => [lat, lon]
     )
     return {
       distance: summary.distance,
       duration: summary.duration,
-      elevationGain: summary.ascent ?? 0,
+      elevationGain: feature.properties.ascent ?? 0,
       coordinates: coords,
     }
   })
