@@ -1,14 +1,14 @@
 # SunRun
 
-A weather-aware running route app. SunRun checks current conditions at your location and suggests round-trip running routes scaled to the weather — longer routes on good days, shorter on bad ones.
+A weather-aware running route app. SunRun checks current conditions at your location and suggests round-trip running routes scaled to the weather. For example: longer routes on good days and shorter on bad ones.
 
 ## Features
 
-- Detects your location via GPS or IP fallback
+- Detects your location via GPS or IP fallback (if GPS fails/isn't enabled)
 - Fetches live weather data (temperature, wind, precipitation, UV index)
-- Scores current conditions and labels the day for running
+- Scores current conditions out of 100 and rates the day for running
 - Finds the best 2-hour window to run within the next 12 hours
-- Generates three route options via OpenRouteService, scaled by weather score
+- Generates three route options via OpenRouteService API, scaled by weather score
 - Displays routes on an interactive map
 
 ## Tech Stack
