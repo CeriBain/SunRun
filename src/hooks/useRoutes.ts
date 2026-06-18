@@ -22,7 +22,10 @@ export function useRoutes(
 
     fetchRoutes(lat, lng, weatherScore)
       .then(setRoutes)
-      .catch(() => setError('Could not load routes'))
+      .catch((err) => {
+        console.error('Route fetch error:', err)
+        setError('Could not load routes')
+      })
       .finally(() => setLoading(false))
   }, [lat, lng, weatherScore])
 
