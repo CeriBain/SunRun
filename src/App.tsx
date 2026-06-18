@@ -7,10 +7,22 @@ import { useWeather } from './hooks/useWeather'
 import { useRoutes } from './hooks/useRoutes'
 import { RoutePanel } from './components/RoutePanel'
 import type { Route } from './lib/routing'
+import { useState } from 'react'
+import { scoreWeather } from './lib/weather'
 
 function App() {
   const { coords } = useLocation()
   const { data } = useWeather(coords?.lat ?? null, coords?.lng ?? null)
+  const [selectedRoute, setSelectedRoute] = useState<Route | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+
+  const score = data ? scoreWeather(data.current) : null
+  const { routes } = useRoutes(coords?.lat ?? null, coords?.lng ?? null, score)
+
+  function handleSelectRoute(route: Route, index: number) {
+    setSelectedRoute(route)
+    setSelectedIndex(index)
+  }
 
   return (
     <div className="relative">
