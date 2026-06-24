@@ -25,4 +25,6 @@ export function useAuth(): AuthState {
 
     return () => listener.subscription.unsubscribe() // clean up function. On unmount, cancel subscription
   }, [])
+
+  return { user, loading }
 }
